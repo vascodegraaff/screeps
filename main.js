@@ -6,7 +6,7 @@ var roleLDHarvester = require("role.LDharvester");
 var roleClaimer = require("role.claimer");
 require("prototype.spawn")();
 
-global.HOME = "W49S31";
+global.HOME = "W4S22";
 module.exports.loop = function() {
     for (let name in Memory.creeps) {
         if (Game.creeps[name] == undefined) {
@@ -49,7 +49,7 @@ module.exports.loop = function() {
         let spawn = Game.spawns[spawnName]
         let creepsInRoom = spawn.room.find(FIND_CREEPS);
 
-
+        var minimumLDHarvester = 0;
 
         var sumHarvesters = _.sum(
             creepsInRoom,
@@ -100,16 +100,16 @@ module.exports.loop = function() {
         } else if (sumLDHarvester < minimumLDHarvester) {
             newCreep = spawn.createLDHarvester(
                 energy,
-                4,
+                1,
                 Game.spawns["Home"].room.name,
-                "W49S32",
+                "W5S22",
                 0
             );
         } else {
             newCreep = spawn.createCustomCreep(energy, "upgrader");
         }
         if (!(newCreep < 0)) {
-            console.log("Spawned new creep: " + newCreep);
+            console.log("New creep: " + newCreep + '(' + Game.creeps[newCreep].memory.role +')');
         }
         if (Game.time % 20 == 0) {
             console.log(

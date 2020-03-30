@@ -1,8 +1,13 @@
 //todo adjust spawn logic
 module.exports = function() {
+    //harvester body type should be different than upgrader, builder and repairer body parts
+
     StructureSpawn.prototype.createCustomCreep = function(energy, roleName) {
-        var numberofParts = Math.floor(energy / 200);
-        var body = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY];
+        var n = Math.floor((energy-200) / 150);
+        var body = [MOVE,MOVE];
+        for (let i = 0; i < n; i++){
+            body.push(WORK,CARRY)
+        }
         return this.createCreep(body, undefined, {
             role: roleName,
             working: false
@@ -15,21 +20,18 @@ module.exports = function() {
         target,
         sourceIndex
     ) {
-        var body = [];
-        for (let i = 0; i < numberOfWorkParts; i++) {
+        var body = [WORK,MOVE,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE];
+/*         for (let i = 0; i < numberOfWorkParts; i++) {
             body.push(WORK);
         }
-        energy -= 150 * numberOfWorkParts;
-        var numberofParts = Math.floor(energy / 100);
+        energy -= 100 * numberOfWorkParts;
+        var numberofParts = Math.floor(energy / 150);
         for (let i = 0; i < numberofParts; i++) {
-            body.push(CARRY);
-        }
-        for (let i = 0; i < numberofParts + numberOfWorkParts; i++) {
-            body.push(MOVE);
-        }
+            body.push(CARRY,CARRY,MOVE);
+        } */
         return this.createCreep(body, undefined, {
             role: "LDharvester",
-            working: "false",
+            working: false,
             home: home,
             target: target,
             sourceIndex: sourceIndex,
@@ -38,4 +40,7 @@ module.exports = function() {
     StructureSpawn.prototype.createClaimerCreep = function(target) {
         return this.createCreep([CLAIM, MOVE], undefined, {role: 'claimer', target: target});
     };
+    StructureSpawn.prototype.createAttackerCreep = function(target) {
+        return this.createCreep([ATTACK,ATTACK,MOVE,MOVE], undefined, {role: 'attacker', target: target})
+    }
 };

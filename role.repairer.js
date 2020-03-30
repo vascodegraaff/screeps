@@ -20,7 +20,7 @@ var roleRepairer = {
                 // we use the arrow operator to define it
                 filter: s =>
                     //only repair structures which have less 70% of total hitpoints
-                    s.hits/s.hitsMax < 0.7 && s.structureType != STRUCTURE_WALL
+                    (s.hits/s.hitsMax < 0.7 && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART) || s.structureType == STRUCTURE_RAMPART && s.hits/s.hitsMax < 0.05
             });
 
             // if we find one
